@@ -32,3 +32,8 @@ Código base gerado via [start.sprint.io](https://start.spring.io/#!type=maven-p
 - Spring Boot DevTools
 - Spring Data JPA
 - H2 Database
+
+## Endereços úteis
+
+- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- [http://localhost:8080/h2](http://localhost:8080/swagger-ui.html)
