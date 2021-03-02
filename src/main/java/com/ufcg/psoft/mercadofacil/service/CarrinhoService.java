@@ -13,4 +13,6 @@ public interface CarrinhoService {
 
 	List<Compra> listarCompras();
 
+	void limparCompras();
+
 }

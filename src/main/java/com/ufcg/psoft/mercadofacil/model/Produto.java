@@ -1,8 +1,9 @@
 package com.ufcg.psoft.mercadofacil.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.ufcg.psoft.mercadofacil.model.Produto;
@@ -11,7 +12,6 @@ import com.ufcg.psoft.mercadofacil.model.Produto;
 public class Produto {
 
 	@Id
-	@GeneratedValue
 	private Long id;
 	
 	private String nome;
@@ -29,6 +29,7 @@ public class Produto {
 	private int estoque;
 
 	public Produto() {
+		this.id = (long) 0;
 		this.preco = new BigDecimal(0);
 	}
 
@@ -37,7 +38,6 @@ public class Produto {
 		this();
 		this.id = id;
 		this.nome = nome;
-		this.preco = new BigDecimal(0);
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
@@ -133,7 +133,7 @@ public class Produto {
 	}
 	
 	public String toString() {
-		return this.id + " " + this.nome;
+		return this.id + " " + this.nome + " R$" + preco.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
 	public int getEstoque() {

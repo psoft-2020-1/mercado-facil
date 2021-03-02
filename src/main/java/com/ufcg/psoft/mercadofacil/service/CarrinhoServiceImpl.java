@@ -27,5 +27,9 @@ public class CarrinhoServiceImpl implements CarrinhoService {
 		return carrinho.findByIdDoProduto(idDoProduto);
 	}
 
+	public void limparCompras() {
+		carrinho.deleteAll();
+	}
+
 
 }
