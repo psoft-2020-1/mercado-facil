@@ -47,7 +47,7 @@ public class ProdutoApiController {
 			return ErroProduto.erroProdutoJaCadastrado(produto);
 		}
 
-		produto.tornaDisponivel();
+		//produto.tornaDisponivel();
 		produtoService.salvarProdutoCadastrado(produto);
 
 		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);

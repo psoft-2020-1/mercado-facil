@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,7 @@ public class LoteApiController {
 	}
 	
 	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
-	public ResponseEntity<?> criarLote(@PathVariable("id") long id, @PathVariable("num_itens") int numItens) {
+	public ResponseEntity<?> criarLote(@PathVariable("id") long id, @RequestBody int numItens) {
 		
 		Optional<Produto> optionalProduto = produtoService.getProdutoById(id);
 		
@@ -56,8 +57,9 @@ public class LoteApiController {
 		
 		loteService.salvarLote(lote);
 		
-		if (produto.isDisponivel() & (numItens > 0)) {
+		if (numItens > 0) {
 			produto.tornaDisponivel();
+			produto.addEstoque(numItens);
 			produtoService.salvarProdutoCadastrado(produto);
 		}
 

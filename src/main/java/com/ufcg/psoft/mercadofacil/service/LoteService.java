@@ -7,6 +7,7 @@ import com.ufcg.psoft.mercadofacil.model.Lote;
 public interface LoteService {
 	
 	public List<Lote> listarLotes();
-
+	
 	public void salvarLote(Lote lote);
+	
 }

@@ -25,6 +25,8 @@ public class Produto {
 	private String categoria;
 
 	private boolean isDisponivel;
+	
+	private int estoque;
 
 	public Produto() {
 		this.preco = new BigDecimal(0);
@@ -32,7 +34,7 @@ public class Produto {
 
 	public Produto(long id, String nome, String codigoBarra, String fabricante,
 			String nomeCategoria) {
-		super();
+		this();
 		this.id = id;
 		this.nome = nome;
 		this.preco = new BigDecimal(0);
@@ -40,6 +42,7 @@ public class Produto {
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
 		this.isDisponivel = false;
+		this.estoque = 0;
 	}
 
 	public long getId() {
@@ -90,6 +93,10 @@ public class Produto {
 		this.isDisponivel = true;
 	}
 	
+	public void tornaIndisponivel() {
+		this.isDisponivel = false;
+	}
+	
 	public boolean isDisponivel() {
 		return this.isDisponivel;
 	}
@@ -127,5 +134,13 @@ public class Produto {
 	
 	public String toString() {
 		return this.id + " " + this.nome;
+	}
+
+	public int getEstoque() {
+		return this.estoque;
+	}
+	
+	public void addEstoque(int novoValor) {
+		this.estoque += novoValor;
 	}
 }
