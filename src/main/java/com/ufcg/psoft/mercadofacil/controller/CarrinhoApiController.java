@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufcg.psoft.mercadofacil.model.Compra;
+import com.ufcg.psoft.mercadofacil.model.Lote;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.service.CarrinhoService;
+import com.ufcg.psoft.mercadofacil.service.LoteService;
 import com.ufcg.psoft.mercadofacil.service.ProdutoService;
 import com.ufcg.psoft.mercadofacil.util.ErroCarrinho;
 import com.ufcg.psoft.mercadofacil.util.ErroProduto;
@@ -27,6 +29,9 @@ import com.ufcg.psoft.mercadofacil.util.ErroProduto;
 public class CarrinhoApiController {
 	@Autowired
 	ProdutoService produtoService;
+	
+	@Autowired
+	LoteService loteService;
 	
 	@Autowired
 	CarrinhoService carrinhoService;
@@ -120,7 +125,9 @@ public class CarrinhoApiController {
 			if(produto.isPresent()) {
 				detalhes += produto.get().toString() + " x " + compra.getQuantidade() + "\n";
 				precoTotal = precoTotal.add(produto.get().getPreco()).multiply(new BigDecimal(compra.getQuantidade()));
+				removeDosLotes(produto.get(), compra.getQuantidade());
 			}
+			
 		}
 		
 		detalhes += "Preço Total: R$" + precoTotal.setScale(2, RoundingMode.HALF_UP).toString();
@@ -128,5 +135,23 @@ public class CarrinhoApiController {
 		carrinhoService.limparCompras();
 		
 		return new ResponseEntity<String>(detalhes, HttpStatus.OK);
+	}
+	
+	private void removeDosLotes(Produto produto, int quantidade) {
+		List<Lote> lotes = loteService.getLotesPeloProduto(produto);
+		
+		for(Lote lote: lotes) {
+			if(quantidade < lote.getNumeroDeItens()) {
+				lote.setNumeroDeItens(lote.getNumeroDeItens() - quantidade);
+				quantidade = 0;
+			}else {
+				quantidade = quantidade - lote.getNumeroDeItens();
+				lote.setNumeroDeItens(0);
+			}
+			
+			loteService.salvarLote(lote);
+			if(quantidade == 0)
+				return;
+		}
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.mercadofacil.model.Lote;
+import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.repository.LoteRepository;
 
 @Service
@@ -20,5 +21,9 @@ public class LoteServiceImpl implements LoteService {
 
 	public void salvarLote(Lote lote) {
 		loteRepository.save(lote);		
+	}
+
+	public List<Lote> getLotesPeloProduto(Produto produto) {
+		return loteRepository.findByProduto(produto);
 	}
 }
