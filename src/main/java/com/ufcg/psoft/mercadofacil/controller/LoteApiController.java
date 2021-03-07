@@ -43,8 +43,8 @@ public class LoteApiController {
 		return new ResponseEntity<List<Lote>>(lotes, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/produto/{idProduto}/lote/", method = RequestMethod.POST)
-	public ResponseEntity<?> criarLote(@PathVariable("idProduto") long id, @RequestBody int numItens) {
+	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
+	public ResponseEntity<?> criarLote(@PathVariable("id") long id, @RequestBody int numItens) {
 		
 		Optional<Produto> optionalProduto = produtoService.getProdutoById(id);
 		
@@ -53,14 +53,15 @@ public class LoteApiController {
 		}
 		
 		Produto produto = optionalProduto.get();
-		Lote lote = loteService.criaLote(numItens, produto);
+		Lote lote = new Lote(produto, numItens);
 		
-		if (!produto.isDisponivel() & (numItens > 0)) {
+		loteService.salvarLote(lote);
+		
+		if (numItens > 0) {
 			produto.tornaDisponivel();
+			produto.addEstoque(numItens);
 			produtoService.salvarProdutoCadastrado(produto);
 		}
-
-		loteService.salvarLote(lote);
 
 		return new ResponseEntity<>(lote, HttpStatus.CREATED);
 	}

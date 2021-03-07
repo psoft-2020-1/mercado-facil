@@ -23,8 +23,7 @@ public class LoteServiceImpl implements LoteService {
 		loteRepository.save(lote);		
 	}
 
-	public Lote criaLote(int numItens, Produto produto) {
-		Lote lote = new Lote(produto, numItens);
-		return lote;
+	public List<Lote> getLotesPeloProduto(Produto produto) {
+		return loteRepository.findByProduto(produto);
 	}
 }

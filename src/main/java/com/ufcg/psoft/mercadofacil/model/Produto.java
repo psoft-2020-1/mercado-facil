@@ -1,9 +1,9 @@
 package com.ufcg.psoft.mercadofacil.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.ufcg.psoft.mercadofacil.model.Produto;
@@ -12,7 +12,6 @@ import com.ufcg.psoft.mercadofacil.model.Produto;
 public class Produto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nome;
@@ -26,21 +25,27 @@ public class Produto {
 	private String categoria;
 
 	private boolean isDisponivel;
+	
+	private int estoque;
 
-	private Produto() {	}
+	public Produto() {
+		this.id = (long) 0;
+		this.preco = new BigDecimal(0);
+	}
 
-	public Produto(String nome, String codigoBarra, String fabricante,
-			BigDecimal preco, String nomeCategoria) {
-		
+	public Produto(long id, String nome, String codigoBarra, String fabricante,
+			String nomeCategoria) {
+		this();
+		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
 		this.isDisponivel = false;
+		this.estoque = 0;
 	}
-	
-	public Long getId() {
+
+	public long getId() {
 		return id;
 	}
 	
@@ -88,6 +93,10 @@ public class Produto {
 		this.isDisponivel = true;
 	}
 	
+	public void tornaIndisponivel() {
+		this.isDisponivel = false;
+	}
+	
 	public boolean isDisponivel() {
 		return this.isDisponivel;
 	}
@@ -124,6 +133,14 @@ public class Produto {
 	}
 	
 	public String toString() {
-		return this.id + " " + this.nome;
+		return this.id + " " + this.nome + " R$" + preco.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public int getEstoque() {
+		return this.estoque;
+	}
+	
+	public void addEstoque(int novoValor) {
+		this.estoque += novoValor;
 	}
 }
