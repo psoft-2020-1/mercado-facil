@@ -4,21 +4,22 @@ Um supermercado da cidade de Campina Grande precisa de um sistema que gerencie o
 
 ## User Stories já implementadas
 
-- Eu, como administrador, gostaria de adicionar um novo produto no sistema,
-informando seu nome, código de barra, fabricante, situação, e categoria;
-- Eu, como administrador, gostaria de consultar a disponibilidade e o preço de cada
-produto do supermercado;
-- Eu, como administrador, gostaria de atribuir um preço (R$) a um determinado
-produto no sistema;
-- Eu, como administrador, gostaria de criar lotes associados aos produtos,
-informando a quantidade de itens disponíveis e a data de validade.
+- Eu, como administrador, gostaria de adicionar um novo produto no sistema, informando seu ID, nome, código de barra, fabricante, e categoria;
+- Eu, como administrador, gostaria de consultar a disponibilidade e o preço de cada produto do supermercado;
+- Eu, como administrador, gostaria de criar lotes associados aos produtos, informando a quantidade de itens disponíveis.
+- Eu, como usuário comum, gostaria de adicionar compras a um carrinho, informando o ID e a quantidade de itens que quero comprar. 
+- Eu, como usuário comum, gostaria de consultar os produtos no carrinho.
+- Eu, como usuário comum, gostaria de comprar todos os produtos que estão no carrinho.
+- Eu, como usuário comum, gostaria de poder esvaziar o carrinho.
+
+
 
 ## Estrutura básica
 
 - Um projeto: MercadoFacil;
 - Um Controller RestApiController que implementa os endpoints da API Rest.
-- Dois repositórios são utilizados: ProdutoRepository e LoteRepository, que são responsáveis por manipular as entidades Produto e Lote em um banco de dados em memória;
-- O modelo é composto pelas classes Produto.java e Lote.java que podem ser
+- Dois repositórios são utilizados: ProdutoRepository, LoteRepository e Carrinho que são responsáveis por manipular as entidades Produto, Lote e Compra em um banco de dados em memória;
+- O modelo é composto pelas classes Produto.java, Lote.java e Compra.java que podem ser
 encontradas no pacote model;
 - O pacote exceptions guarda as classes de exceções que podem ser levantadas
 dentro do sistema;
