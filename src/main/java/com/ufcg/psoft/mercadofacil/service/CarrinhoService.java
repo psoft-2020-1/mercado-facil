@@ -7,12 +7,12 @@ import com.ufcg.psoft.mercadofacil.model.Compra;
 
 public interface CarrinhoService {
 
-	void adicionarCompra(Compra compra);
+	public void adicionarCompra(Compra compra);
 
-	Optional<Compra> getByIdDoProduto(long idDoProduto);
+	public Optional<Compra> getByIdDoProduto(long idDoProduto);
 
-	List<Compra> listarCompras();
+	public List<Compra> listarCompras();
 
-	void limparCompras();
+	public void limparCompras();
 
 }
