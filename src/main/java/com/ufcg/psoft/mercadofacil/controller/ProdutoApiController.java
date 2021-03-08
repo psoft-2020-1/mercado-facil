@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.ufcg.psoft.mercadofacil.DTO.ProdutoDTO;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.service.ProdutoService;
 import com.ufcg.psoft.mercadofacil.util.ErroProduto;
@@ -40,19 +39,20 @@ public class ProdutoApiController {
 	}
 	
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
-	public ResponseEntity<?> criarProduto(@RequestBody ProdutoDTO produtoDTO, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> criarProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
 
-		List<Produto> produtos = produtoService.getProdutoByCodigoBarra(produtoDTO.getCodigoBarra());
+		List<Produto> produtos = produtoService.getProdutoByCodigoBarra(produto.getCodigoBarra());
 		
 		if (!produtos.isEmpty()) {
-			return ErroProduto.erroProdutoJaCadastrado(produtoDTO);
+			return ErroProduto.erroProdutoJaCadastrado(produto);
 		}
 
-		Produto produto = produtoService.criaProduto(produtoDTO);
+		produto.tornaDisponivel();
 		produtoService.salvarProdutoCadastrado(produto);
 
 		return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
 	}
+	
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> consultarProduto(@PathVariable("id") long id) {
@@ -60,27 +60,32 @@ public class ProdutoApiController {
 		Optional<Produto> optionalProduto = produtoService.getProdutoById(id);
 	
 		if (!optionalProduto.isPresent()) {
-			return ErroProduto.erroProdutoNaoEnconrtrado(id);
+			return ErroProduto.erroProdutoNaoEncontrado(id);
 		}
 		
 		return new ResponseEntity<Produto>(optionalProduto.get(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> atualizarProduto(@PathVariable("id") long id, @RequestBody ProdutoDTO produtoDTO) {
+	public ResponseEntity<?> atualizarProduto(@PathVariable("id") long id, @RequestBody Produto produto) {
 
 		Optional<Produto> optionalProduto = produtoService.getProdutoById(id);
 		
 		if (!optionalProduto.isPresent()) {
-			return ErroProduto.erroProdutoNaoEnconrtrado(id);
+			return ErroProduto.erroProdutoNaoEncontrado(id);
 		}
 		
-		Produto produto = optionalProduto.get();
+		Produto currentProduto = optionalProduto.get();
 		
-		produtoService.atualizaProduto(produtoDTO, produto);
-		produtoService.salvarProdutoCadastrado(produto);
+		currentProduto.setNome(produto.getNome());
+		currentProduto.setPreco(produto.getPreco());
+		currentProduto.setCodigoBarra(produto.getCodigoBarra());
+		currentProduto.mudaFabricante(produto.getFabricante());
+		currentProduto.mudaCategoria(produto.getCategoria());
+
+		produtoService.salvarProdutoCadastrado(currentProduto);
 		
-		return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+		return new ResponseEntity<Produto>(currentProduto, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.DELETE)
@@ -89,11 +94,11 @@ public class ProdutoApiController {
 		Optional<Produto> optionalProduto = produtoService.getProdutoById(id);
 		
 		if (!optionalProduto.isPresent()) {
-			return ErroProduto.erroProdutoNaoEnconrtrado(id);
+			return ErroProduto.erroProdutoNaoEncontrado(id);
 		}
 				
 		produtoService.removerProdutoCadastrado(optionalProduto.get());
 
-		return new ResponseEntity<Produto>(HttpStatus.OK);
+		return new ResponseEntity<Produto>(HttpStatus.NO_CONTENT);
 	}
 }
