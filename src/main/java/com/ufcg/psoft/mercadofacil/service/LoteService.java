@@ -12,4 +12,6 @@ public interface LoteService {
 	public void salvarLote(Lote lote);
 	
 	public Lote criaLote(int numItens, Produto produto);
+	
+	public List<Lote> getLoteByProduto(Produto produto);
 }

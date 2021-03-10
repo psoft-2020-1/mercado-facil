@@ -27,4 +27,9 @@ public class LoteServiceImpl implements LoteService {
 		Lote lote = new Lote(produto, numItens);
 		return lote;
 	}
+	
+	@Override
+	public List<Lote> getLoteByProduto(Produto produto) {
+		return loteRepository.findByProduto(produto);
+	}
 }
