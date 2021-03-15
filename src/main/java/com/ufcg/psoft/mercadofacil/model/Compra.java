@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Compra {
@@ -23,12 +24,16 @@ public class Compra {
 	
 	private BigDecimal precoTotal;
 	
+	@OneToOne
+	private FormaDePagamento formaDePagamento;
+	
 	private Compra() {}
 	
-	public Compra(Calendar data, List<Produto> produtos, BigDecimal precoTotal) {
+	public Compra(Calendar data, List<Produto> produtos, BigDecimal precoTotal, FormaDePagamento formaDePagamento) {
 		this.data = data;
 		this.produtos = produtos;
 		this.precoTotal = precoTotal;
+		this.formaDePagamento = formaDePagamento;
 	}
 
 	public Long getId() {
@@ -45,5 +50,9 @@ public class Compra {
 
 	public BigDecimal getPrecoTotal() {
 		return precoTotal;
+	}
+
+	public FormaDePagamento getFormaDePagamento() {
+		return formaDePagamento;
 	}
 }

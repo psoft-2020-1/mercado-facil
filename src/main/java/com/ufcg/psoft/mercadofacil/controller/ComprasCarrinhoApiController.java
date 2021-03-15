@@ -67,15 +67,17 @@ public class ComprasCarrinhoApiController {
 		return comprasCarrinhoService.descartarCarrinho();
 	}
 
-	@RequestMapping(value = "/compras", method = RequestMethod.POST)
-	public ResponseEntity<?> finalizarCompra() {
-		return comprasCarrinhoService.finalizarCompra();
+	@RequestMapping(value = "/compras/pagamento/{id}", method = RequestMethod.POST)
+	public ResponseEntity<?> finalizarCompra(@PathVariable("id") long idFormaDePagamento) {
+		return comprasCarrinhoService.finalizarCompra(idFormaDePagamento);
 	}
 	
 	@RequestMapping(value = "/compras", method = RequestMethod.GET)
 	public ResponseEntity<?> listarCompras() {
 		return comprasCarrinhoService.listarCompras();
 	}
+	
+	//@RequestMapping(value = "/compras/{id}", method = RequestMethod.GET)
 	
 	@RequestMapping(value = "/compras/pagamento", method = RequestMethod.POST)
 	public ResponseEntity<?> adicionarFormaDePagamento(@RequestBody FormaDePagamentoDTO formaDePagamentoDTO) {

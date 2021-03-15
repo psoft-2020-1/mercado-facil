@@ -13,7 +13,7 @@ public interface ComprasCarrinhoService {
 
 	public ResponseEntity<?> listarItensCarrinho();
 
-	public ResponseEntity<?> finalizarCompra();
+	public ResponseEntity<?> finalizarCompra(long idFormaDePagamento);
 
 	public ResponseEntity<?> descartarCarrinho();
 	

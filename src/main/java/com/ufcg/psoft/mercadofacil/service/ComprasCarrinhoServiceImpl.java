@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -154,7 +155,7 @@ public class ComprasCarrinhoServiceImpl implements ComprasCarrinhoService {
 	 * quantidades e o custo final.
 	 */
 	@Override
-	public ResponseEntity<?> finalizarCompra() {
+	public ResponseEntity<?> finalizarCompra(long idFormaDePagamento) {
 		if (carrinhoIsEmpty()) {
 			return ErroCarrinhoItem.carrinhoVazio();
 		}
@@ -171,9 +172,12 @@ public class ComprasCarrinhoServiceImpl implements ComprasCarrinhoService {
 			produtosCompra.add(itemCarrinho.getProduto());
 		}
 		
+		Optional<FormaDePagamento> optFormaDePagamento = formaDePagamentoRepository.findById(idFormaDePagamento);
+		FormaDePagamento formaDePagamento = optFormaDePagamento.get();
+		
 		Calendar data = Calendar.getInstance();
 		
-		Compra novaCompra = new Compra(data, produtosCompra, precoTotal);
+		Compra novaCompra = new Compra(data, produtosCompra, precoTotal, formaDePagamento);
 		
 		compraRepository.save(novaCompra);
 
