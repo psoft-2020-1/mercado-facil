@@ -256,4 +256,13 @@ public class ComprasCarrinhoServiceImpl implements ComprasCarrinhoService {
 		
 		return new ResponseEntity<>(formasDePagamento, HttpStatus.OK);
 	}
+
+	@Override
+	public ResponseEntity<?> consultarCompra(long idCompra) {
+		Optional<Compra> optCompra = compraRepository.findById(idCompra);
+		
+		Compra compra = optCompra.get();
+		
+		return new ResponseEntity<>(compra, HttpStatus.OK);
+	}
 }

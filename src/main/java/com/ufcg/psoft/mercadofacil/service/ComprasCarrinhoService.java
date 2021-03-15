@@ -22,4 +22,6 @@ public interface ComprasCarrinhoService {
 	public ResponseEntity<?> adicionarFormaDePagamento(FormaDePagamentoDTO formaDePagamentoDTO);
 	
 	public ResponseEntity<?> listarFormasDePagamento();
+
+	public ResponseEntity<?> consultarCompra(long idCompra);
 }

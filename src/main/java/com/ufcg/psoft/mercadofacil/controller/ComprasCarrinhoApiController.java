@@ -77,7 +77,10 @@ public class ComprasCarrinhoApiController {
 		return comprasCarrinhoService.listarCompras();
 	}
 	
-	//@RequestMapping(value = "/compras/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/compras/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> consultarCompra(@PathVariable("id") long idCompra) {
+		return comprasCarrinhoService.consultarCompra(idCompra);
+	}
 	
 	@RequestMapping(value = "/compras/pagamento", method = RequestMethod.POST)
 	public ResponseEntity<?> adicionarFormaDePagamento(@RequestBody FormaDePagamentoDTO formaDePagamentoDTO) {
