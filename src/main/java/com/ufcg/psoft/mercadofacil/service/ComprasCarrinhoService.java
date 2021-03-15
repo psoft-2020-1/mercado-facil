@@ -2,9 +2,10 @@ package com.ufcg.psoft.mercadofacil.service;
 
 import org.springframework.http.ResponseEntity;
 
+import com.ufcg.psoft.mercadofacil.DTO.FormaDePagamentoDTO;
 import com.ufcg.psoft.mercadofacil.model.CarrinhoItem;
 
-public interface CarrinhoItemService {
+public interface ComprasCarrinhoService {
 
 	public ResponseEntity<?> adcionarItemCarrinho(long id, CarrinhoItem carrinhoItem);
 
@@ -15,4 +16,10 @@ public interface CarrinhoItemService {
 	public ResponseEntity<?> finalizarCompra();
 
 	public ResponseEntity<?> descartarCarrinho();
+	
+	public ResponseEntity<?> listarCompras();
+	
+	public ResponseEntity<?> adicionarFormaDePagamento(FormaDePagamentoDTO formaDePagamentoDTO);
+	
+	public ResponseEntity<?> listarFormasDePagamento();
 }

@@ -11,22 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufcg.psoft.mercadofacil.DTO.FormaDePagamentoDTO;
 import com.ufcg.psoft.mercadofacil.model.CarrinhoItem;
 import com.ufcg.psoft.mercadofacil.model.Produto;
-import com.ufcg.psoft.mercadofacil.service.CarrinhoItemService;
+import com.ufcg.psoft.mercadofacil.service.ComprasCarrinhoService;
 import com.ufcg.psoft.mercadofacil.service.ProdutoService;
 import com.ufcg.psoft.mercadofacil.util.ErroProduto;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class CarrinhoItemApiController {
+public class ComprasCarrinhoApiController {
 
 	@Autowired
 	ProdutoService produtoService;
 
 	@Autowired
-	CarrinhoItemService carrinhoItemService;
+	ComprasCarrinhoService comprasCarrinhoService;
 
 	@RequestMapping(value = "/carrinho/{id}", method = RequestMethod.POST)
 	public ResponseEntity<?> adcionarItemCarrinho(@PathVariable("id") long id, @RequestBody int numItens) {
@@ -39,7 +40,7 @@ public class CarrinhoItemApiController {
 		Produto produto = optionalProduto.get();
 		CarrinhoItem carrinhoItem = new CarrinhoItem(produto, numItens);
 
-		return carrinhoItemService.adcionarItemCarrinho(id, carrinhoItem);
+		return comprasCarrinhoService.adcionarItemCarrinho(id, carrinhoItem);
 	}
 
 	@RequestMapping(value = "/carrinho/{id}", method = RequestMethod.DELETE)
@@ -53,22 +54,36 @@ public class CarrinhoItemApiController {
 		Produto produto = optionalProduto.get();
 		CarrinhoItem carrinhoItem = new CarrinhoItem(produto, numItens);
 
-		return carrinhoItemService.removerItemCarrinho(id, carrinhoItem);
+		return comprasCarrinhoService.removerItemCarrinho(id, carrinhoItem);
 	}
 
 	@RequestMapping(value = "/carrinho", method = RequestMethod.GET)
 	public ResponseEntity<?> listarItensCarrinho() {
-		return carrinhoItemService.listarItensCarrinho();
+		return comprasCarrinhoService.listarItensCarrinho();
 	}
-
-	// verbo completamente inadequado
-	@RequestMapping(value = "/carrinho", method = RequestMethod.PUT)
-	public ResponseEntity<?> finalizarCompra() {
-		return carrinhoItemService.finalizarCompra();
-	}
-
+	
 	@RequestMapping(value = "/carrinho", method = RequestMethod.DELETE)
 	public ResponseEntity<?> descartarCarrinho() {
-		return carrinhoItemService.descartarCarrinho();
+		return comprasCarrinhoService.descartarCarrinho();
+	}
+
+	@RequestMapping(value = "/compras", method = RequestMethod.POST)
+	public ResponseEntity<?> finalizarCompra() {
+		return comprasCarrinhoService.finalizarCompra();
+	}
+	
+	@RequestMapping(value = "/compras", method = RequestMethod.GET)
+	public ResponseEntity<?> listarCompras() {
+		return comprasCarrinhoService.listarCompras();
+	}
+	
+	@RequestMapping(value = "/compras/pagamento", method = RequestMethod.POST)
+	public ResponseEntity<?> adicionarFormaDePagamento(@RequestBody FormaDePagamentoDTO formaDePagamentoDTO) {
+		return comprasCarrinhoService.adicionarFormaDePagamento(formaDePagamentoDTO);
+	}
+	
+	@RequestMapping(value = "/compras/pagamento", method = RequestMethod.GET)
+	public ResponseEntity<?> listarFormasDePagamento() {
+		return comprasCarrinhoService.listarFormasDePagamento();
 	}
 }

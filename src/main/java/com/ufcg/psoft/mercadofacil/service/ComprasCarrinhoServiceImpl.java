@@ -1,6 +1,8 @@
 package com.ufcg.psoft.mercadofacil.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.mercadofacil.model.CarrinhoItem;
+import com.ufcg.psoft.mercadofacil.model.Compra;
+import com.ufcg.psoft.mercadofacil.model.FormaDePagamento;
 import com.ufcg.psoft.mercadofacil.DTO.DadosCompraDTO;
+import com.ufcg.psoft.mercadofacil.DTO.FormaDePagamentoDTO;
 import com.ufcg.psoft.mercadofacil.model.Lote;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.repository.CarrinhoItemRepository;
+import com.ufcg.psoft.mercadofacil.repository.CompraRepository;
+import com.ufcg.psoft.mercadofacil.repository.FormaDePagamentoRepository;
 import com.ufcg.psoft.mercadofacil.util.ErroCarrinhoItem;
 
 /**
@@ -22,13 +29,19 @@ import com.ufcg.psoft.mercadofacil.util.ErroCarrinhoItem;
  *
  */
 @Service
-public class CarrinhoItemServiceImpl implements CarrinhoItemService {
+public class ComprasCarrinhoServiceImpl implements ComprasCarrinhoService {
 
 	@Autowired
 	private CarrinhoItemRepository carrinhoItemRepository;
 
 	@Autowired
 	private LoteService loteService;
+	
+	@Autowired
+	private CompraRepository compraRepository;
+	
+	@Autowired
+	private FormaDePagamentoRepository formaDePagamentoRepository;
 
 	/**
 	 * Adiciona uma certa quantidade de um produto ao carrinho, subtraindo as
@@ -152,6 +165,17 @@ public class CarrinhoItemServiceImpl implements CarrinhoItemService {
 		for (CarrinhoItem carrinhoItem : itensCarrinho) {
 			precoTotal = precoTotal.add(carrinhoItem.calculaPreco());
 		}
+		
+		List<Produto> produtosCompra = new ArrayList<>();
+		for (CarrinhoItem itemCarrinho : itensCarrinho) {
+			produtosCompra.add(itemCarrinho.getProduto());
+		}
+		
+		Calendar data = Calendar.getInstance();
+		
+		Compra novaCompra = new Compra(data, produtosCompra, precoTotal);
+		
+		compraRepository.save(novaCompra);
 
 		carrinhoItemRepository.deleteAll();
 
@@ -204,5 +228,28 @@ public class CarrinhoItemServiceImpl implements CarrinhoItemService {
 		}
 
 		return false;
+	}
+
+	@Override
+	public ResponseEntity<?> listarCompras() {
+		List<Compra> compras = compraRepository.findAll();
+		
+		return new ResponseEntity<>(compras, HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<?> adicionarFormaDePagamento(FormaDePagamentoDTO formaDePagamentoDTO) {
+		FormaDePagamento novaFormaDePagamento = new FormaDePagamento(formaDePagamentoDTO.getNome());
+		
+		formaDePagamentoRepository.save(novaFormaDePagamento);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> listarFormasDePagamento() {
+		List<FormaDePagamento> formasDePagamento = formaDePagamentoRepository.findAll();
+		
+		return new ResponseEntity<>(formasDePagamento, HttpStatus.OK);
 	}
 }

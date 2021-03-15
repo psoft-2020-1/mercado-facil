@@ -24,6 +24,11 @@ public class CarrinhoItem {
 	private Produto produto;
 
 	private int numeroDeItens;
+	
+	public CarrinhoItem(CarrinhoItem carrinhoItem) {
+		this.produto = carrinhoItem.getProduto();
+		this.numeroDeItens = carrinhoItem.getNumeroDeItens();
+	}
 
 	public CarrinhoItem() {
 		this.id = 0;
