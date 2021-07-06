@@ -3,7 +3,6 @@ package com.ufcg.psoft.mercadofacil.util;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ufcg.psoft.mercadofacil.DTO.ProdutoDTO;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 
 public class ErroProduto {
@@ -17,7 +16,7 @@ public class ErroProduto {
 
 	static final String PRODUTO_JA_CADASTRADO = "O produto %s do fabricante %s já esta cadastrado";
 
-	public static ResponseEntity<CustomErrorType> erroProdutoNaoEnconrtrado(long id) {
+	public static ResponseEntity<CustomErrorType> erroProdutoNaoEncontrado(long id) {
 		return new ResponseEntity<CustomErrorType>(new CustomErrorType(String.format(ErroProduto.PRODUTO_NAO_CASTRADO, id)),
 				HttpStatus.NOT_FOUND);
 	}
@@ -32,8 +31,8 @@ public class ErroProduto {
 				produto.getNome(), produto.getFabricante())), HttpStatus.NOT_MODIFIED);
 	}
 	
-	public static ResponseEntity<?> erroProdutoJaCadastrado(ProdutoDTO produtoDTO) {
+	public static ResponseEntity<?> erroProdutoJaCadastrado(Produto produto) {
 		return new ResponseEntity<CustomErrorType>(new CustomErrorType(String.format(ErroProduto.PRODUTO_JA_CADASTRADO,
-				produtoDTO.getNome(), produtoDTO.getFabricante())), HttpStatus.CONFLICT);
+				produto.getNome(), produto.getFabricante())), HttpStatus.CONFLICT);
 	}
 }

@@ -3,16 +3,13 @@ package com.ufcg.psoft.mercadofacil.model;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.ufcg.psoft.mercadofacil.model.Produto;
 
 @Entity
 public class Produto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 	
 	private String nome;
@@ -27,20 +24,23 @@ public class Produto {
 
 	private boolean isDisponivel;
 
-	private Produto() {	}
+	public Produto() {
+		this.preco = new BigDecimal(0);
+	}
 
-	public Produto(String nome, String codigoBarra, String fabricante,
-			BigDecimal preco, String nomeCategoria) {
-		
+	public Produto(long id, String nome, String codigoBarra, String fabricante,
+			String nomeCategoria) {
+		super();
+		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
+		this.preco = new BigDecimal(0);
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
 		this.isDisponivel = false;
 	}
-	
-	public Long getId() {
+
+	public long getId() {
 		return id;
 	}
 	

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ufcg.psoft.mercadofacil.DTO.ProdutoDTO;
 import com.ufcg.psoft.mercadofacil.model.Produto;
 import com.ufcg.psoft.mercadofacil.repository.ProdutoRepository;
 
@@ -34,23 +33,5 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	public List<Produto> listarProdutos() {
 		return produtoRepository.findAll();
-	}
-
-	public Produto criaProduto(ProdutoDTO produtoDTO) {
-		Produto produto = new Produto(produtoDTO.getNome(), produtoDTO.getFabricante(), produtoDTO.getCodigoBarra(),
-				produtoDTO.getPreco(), produtoDTO.getCategoria());
-		
-		produto.tornaDisponivel();
-		return produto;
-	}
-
-	public Produto atualizaProduto(ProdutoDTO produtoDTO, Produto produto) {
-		produto.setNome(produtoDTO.getNome());
-		produto.setPreco(produtoDTO.getPreco());
-		produto.setCodigoBarra(produtoDTO.getCodigoBarra());
-		produto.mudaFabricante(produtoDTO.getFabricante());
-		produto.mudaCategoria(produtoDTO.getCategoria());
-		
-		return produto;
 	}
 }

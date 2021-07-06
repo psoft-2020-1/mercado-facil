@@ -2,7 +2,6 @@ package com.ufcg.psoft.mercadofacil.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -10,22 +9,35 @@ import javax.persistence.OneToOne;
 public class Lote {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue
+    private long id;
 	
 	@OneToOne
     private Produto produto;
     private int numeroDeItens;
 
-    private Lote() { }
-    
+    public Lote() {
+        this.id = 0;
+    }
+
     public Lote(Produto produto, int numeroDeItens) {
+        super();
         this.produto = produto;
         this.numeroDeItens = numeroDeItens;
     }
 
-    public Long getId() {
+    public Lote(long id, Produto produto, int numeroDeItens) {
+        this.id = id;
+        this.produto = produto;
+        this.numeroDeItens = numeroDeItens;
+    }
+
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Produto getProduto() {
