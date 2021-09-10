@@ -2,6 +2,11 @@ package com.ufcg.psoft.mercadofacil.model;
 
 import java.io.Serializable;
 
+
+/**
+ * Model responsável por armazenar os dados recebidos do client
+ *
+ */
 public class JwtRequest implements Serializable {
 
 	private static final long serialVersionUID = 5926468583005150707L;

@@ -8,6 +8,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Componente que rejeita solicitações não autenticadas e responde com código 401 (unauthorized)
+ *
+ */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {
 	private static final long serialVersionUID = -7858869558953243875L;

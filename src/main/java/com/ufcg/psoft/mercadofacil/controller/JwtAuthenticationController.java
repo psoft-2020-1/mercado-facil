@@ -18,6 +18,11 @@ import com.ufcg.psoft.mercadofacil.model.JwtRequest;
 import com.ufcg.psoft.mercadofacil.model.JwtResponse;
 import com.ufcg.psoft.mercadofacil.service.JwtUserDetailsService;
 
+
+/**
+ * Controller responsável pela gerência da autenticação da aplicação
+ *
+ */
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {

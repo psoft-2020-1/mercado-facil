@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.ufcg.psoft.mercadofacil.model.Cliente;
 
+
+/**
+ * Serviço que implementa a lógica de autenticação através dos dados enviados pelo client
+ *
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 

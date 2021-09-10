@@ -13,6 +13,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+
+/**
+ * Classe responsável por fazer toda a lógica de geração, gerenciamento e manipulação dos tokens
+ *
+ */
 @Component
 public class JwtTokenUtil implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;

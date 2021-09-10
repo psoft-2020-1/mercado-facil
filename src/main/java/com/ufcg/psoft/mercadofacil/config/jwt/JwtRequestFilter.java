@@ -16,6 +16,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.ufcg.psoft.mercadofacil.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 
+
+/**
+ * Componente que verifica se as solicitações de acesso a um endpoint possui um token
+ * JWT válido
+ *
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
