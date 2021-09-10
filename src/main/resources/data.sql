@@ -18,5 +18,5 @@ values(1, 10005, 5);
 
 update produto set IS_DISPONIVEL = TRUE where ID = 10005;
 
-insert into cliente (ID, CPF, NOME, IDADE, ENDERECO)
-values(1001, 10020030006, 'Fulano', 23, 'Rua tal');
+insert into cliente (ID, CPF, NOME, IDADE, ENDERECO, PASSWORD)
+values(1001, 10020030006, 'Fulano', 23, 'Rua tal', '$2a$04$rbb7C4cLkaLoON4KIdpXGO2uU1gQSEOGmcswuXnYxAxluld0yTfp6');

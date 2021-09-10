@@ -15,18 +15,21 @@ public class Cliente {
 	private Long CPF;
 	
 	private String nome;
-
+	
+	private String password;
+	
 	private Integer idade;
 
 	private String endereco;
 
 	private Cliente() {}
 
-	public Cliente(Long cpf, String nome, Integer idade, String endereco) {
+	public Cliente(Long cpf, String nome, Integer idade, String endereco, String password) {
 		this.CPF = cpf;
 		this.nome = nome;
 		this.idade = idade;
 		this.endereco = endereco;
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -55,5 +58,13 @@ public class Cliente {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 }

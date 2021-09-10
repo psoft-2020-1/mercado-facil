@@ -5,6 +5,8 @@ public class ClienteDTO {
 	private Long cpf;
 	
 	private String nome;
+	
+	private String password;
 
 	private Integer idade;
 
@@ -24,5 +26,9 @@ public class ClienteDTO {
 
 	public String getEndereco() {
 		return endereco;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }
