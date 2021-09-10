@@ -11,7 +11,9 @@ public interface ClienteService {
 	public Optional<Cliente> getClienteById(Long id);
 	
 	public Optional<Cliente> getClienteByCPF(Long cpf);
-	
+
+	public Optional<Cliente> getClienteByNome(String nome);
+
 	public void removerClienteCadastrado(Cliente cliente);
 
 	public void salvarClienteCadastrado(Cliente cliente);

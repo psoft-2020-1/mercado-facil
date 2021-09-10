@@ -24,6 +24,10 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository.findByCPF(cpf);
 	}
 	
+	public Optional<Cliente> getClienteByNome(String nome) {
+		return clienteRepository.findByNome(nome);
+	}
+	
 	public void removerClienteCadastrado(Cliente cliente) {
 		clienteRepository.delete(cliente);
 	}
@@ -38,7 +42,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	public Cliente criaCliente(ClienteDTO clienteDTO) {
 		Cliente cliente = new Cliente(clienteDTO.getCPF(), clienteDTO.getNome(), 
-				clienteDTO.getIdade(), clienteDTO.getEndereco());
+				clienteDTO.getIdade(), clienteDTO.getEndereco(), clienteDTO.getPassword());
 		
 		return cliente;
 	}
@@ -49,4 +53,6 @@ public class ClienteServiceImpl implements ClienteService {
 		
 		return cliente;
 	}
+
+
 }
